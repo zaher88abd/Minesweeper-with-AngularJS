@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script>
+	  var app = angular.module("MyApp", []);
+	  app.controller("MinesweeperController", ["$scope", function($scope) {
+          var mineField={};
+          mineField.rows=[];
+          $scope.mineRow=0;
+          $scope.mineColumn=0;
+          var placeRedomeMine=function(){
+            var row=Math.round(Math.random()*0);
+            var colum=Math.round(Math.random()*0);
+            var spot=getSpot(mineField.row.spots[row,column]);
+          }
+
+      	  var createMinerFilede=function(){
+          for(var i=0;i<9;i++)
+            {
+              var row={};
+              row.spots=[];
+              for(var j=0;j<9;j++)
+              {
+                var spot={};
+                spot.isMine=false;
+                spot.isHidden=true;
+                spot.isCovered=false;
+                row.spots.push(spot);
+              }
+              mineField.rows.push(row);
+            }
+            return mineField;
+                    }
+                    $scope.changeSpot=function(spot){
+                      if(spot.isHidden){
+                        if(!spot.isMine){
+                        spot.isHidden=false;
+                        spot.isCovered=true;
+                      }
+                
+                      
+                    }}
+                    $scope.mineField=createMinerFilede();
+                    $scope.placeRedomeMine();
+      }]);
+      </script>
+  <style>
+
+  </style>
+</head>
+
+<body ng-controller="MinesweeperController">
+  <table >
+    <tr ng-repeat="row in mineField.rows">
+      <td ng-repeat="spot in row.spots" ng-click="changeSpot(spot)">
+       <img ng-if="spot.isCovered" src="block.png">
+    <img ng-if="!spot.isCovered && spot.content == 'empty'" src="empty.png">
+    <img ng-if="!spot.isCovered && spot.content == 'mine'" src="mine.png">
+      </td>
+    </tr>
+  </table>
+{{mineRow}}-{{mineColumn}}
+</body>
+
+</html>
